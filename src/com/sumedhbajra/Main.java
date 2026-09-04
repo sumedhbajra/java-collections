@@ -123,4 +123,5 @@ public class Main {
 //                System.out.println(i);
 //            }
     }
+    private static Map<Integer, Location> locations = new HashMap<Integer, Location>();
 }
