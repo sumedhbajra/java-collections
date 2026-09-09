@@ -55,7 +55,7 @@ public class Theatre {
     }
 
     public boolean reserveSeat(String seatNumber) {
-        Seat requestedSeat = new Seat(seatNumber);
+        Seat requestedSeat = new Seat(seatNumber, 0);
 //        System.out.println("SEAT COUNT: " + seats.size());
         int foundSeat = Collections.binarySearch(seats,  requestedSeat,null);
 //        System.out.println("seatNumber: " + seatNumber);
@@ -88,17 +88,16 @@ public class Theatre {
     }
 
     // for testing
-    public void getSeats() {
-        for(Seat seat : seats) {
-            System.out.println(seat.getSeatNumber());
-        }
+    public Collection<Seat> getSeats() {
+       return seats;
     }
 
     private class Seat implements Comparable<Seat> {
         private final String seatNumber;
         private boolean reserved = false;
+        private double price;
 
-        public Seat(String seatNumber) {
+        public Seat(String seatNumber, double price) {
             this.seatNumber = seatNumber;
         }
 
@@ -129,6 +128,10 @@ public class Theatre {
 
         public String getSeatNumber() {
             return seatNumber;
+        }
+
+        public double getPrice() {
+            return price;
         }
 
         @Override
