@@ -4,7 +4,7 @@ public class StockItem implements Comparable<StockItem> {
     private final String name;
     private double price;
     private int quantityStock;
-    private int reserved;
+    private int reserved = 0;
 
     public StockItem(String name, double price) {
         this.name = name;
@@ -26,6 +26,10 @@ public class StockItem implements Comparable<StockItem> {
         return price;
     }
 
+    public int availableQuantity() {
+        return quantityStock - reserved;
+    }
+
     public String getName() {
         return name;
     }
@@ -44,15 +48,24 @@ public class StockItem implements Comparable<StockItem> {
     }
 
     public int reserveStock(int quantity) {
-        if(quantity <= quantityInStock()) {
+        if(quantity <= quantityInStock()) { // Use the method, not the field
             reserved += quantity;
             return quantity;
         }
         return 0;
     }
 
-    public int unreleaseStock(int quantity) {
+    public int unreserveStock(int quantity) {
         if(quantity <= reserved) {
+            reserved -= quantity;
+            return quantity;
+        }
+        return 0;
+    }
+
+    public int finaliseStock(int quantity) {
+        if(quantity <= reserved) {
+            quantityStock -= quantity;
             reserved -= quantity;
             return quantity;
         }
@@ -97,6 +110,7 @@ public class StockItem implements Comparable<StockItem> {
                 "name='" + name + '\'' +
                 ", price=" + price +
                 ", quantityStock=" + quantityStock +
+                ", reserved=" + reserved +
                 '}';
     }
 }
